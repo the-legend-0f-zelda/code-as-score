@@ -1,1 +1,1 @@
-Play at (strudel)[https://strudel.cc]
+Play at [strudel](https://strudel.cc)
