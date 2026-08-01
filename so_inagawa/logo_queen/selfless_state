@@ -1,0 +1,7 @@
+setcps(1/4)
+
+stack(
+  note ("<[a2 e3 a2 a2 e3 a2 a2 e3 a2 a2 e3 g2] [f2 e3 f2 f2 e3 a2 g2 e3 g2 g2 e3 g2]>")
+  .sound("gm_lead_2_sawtooth")
+  .room(4).size(2)
+)
