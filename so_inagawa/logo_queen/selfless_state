@@ -5,14 +5,16 @@ stack(
   [a2@15 e3@15 a2@18 a2@10 e3@10 a2@12 a2@15 e3@15 a2@18 a2@10 e3@10 a2@12]
   [f2@15 e3@15 f2@18 f2@10 e3@10 f2@12 g2@15 e3@15 g2@18 g2@10 e3@10 g2@12]
   >`)
-  .sound("gm_synth_strings_2")
-  .room(1).size(1.2).gain(0.25).orbit(1),
+  .add(note(12))
+  .sound("sine")
+  .gain(0.8)
+  .room(0.5).size(1.2).orbit(1),
 
   arrange(
     [4, silence],
     [1,
      note("[c#6 ~ ~ ~ ~ ~ ~ ~]")
-     .sound("piano")
+     .sound("gm_glockenspiel")
      .room(5).size(1).orbit(2)
      .delay(0.3).delaytime(0.25).delayfeedback(0.7)
     ],
