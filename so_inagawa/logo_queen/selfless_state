@@ -6,9 +6,9 @@ const note1 = note(`<
   [e2@15 d3@15 e2@16 e2@10 d3@10 e2@12]
   >`)
   .add(note(9))
-  .sound("z_sine")
+  .sound("triangle")
   .gain(0.3)
-  .room(2.2).size(1.4).orbit(1)
+  .room(2.2).size(1.7).orbit(1)
 
 const note2 = note(`<
   [~@15 g3@15 ~@30 g3@15 ~@15]!2
@@ -17,9 +17,9 @@ const note2 = note(`<
   [~@15 a3@15 ~@30 a3@15 ~@15]!2
   >`)
   .add(note(9))
-  .sound("z_sine")
+  .sound("triangle")
   .gain(0.28)
-  .room(2).size(1.4).orbit(2)
+  .room(3).size(2).orbit(2)
 
 const note3 = note(`<
   [a3@14 ~@2 c4@15 ~@12 a3@14 ~@2 c4@15 ~@12]!2
@@ -27,18 +27,33 @@ const note3 = note(`<
   [e3@14 ~@2 a3@15 ~@12 e3@14 ~@2 a3@15 ~@12]
   >`)
   .add(note(9))
-  .sound("z_sine")
+  .sound("triangle")
   .gain(0.35)
-  .room(2).size(1.4).orbit(3)
+  .room(2).size(2).orbit(3)
 
 const beats = stack(
   s(`<
-  [~ cp ~ cp]!7
-  [~ cp ~@0.15 cp@0.2 cp@0.25 ~@0.32 cp@1.08]
+  [~ cp ~ cp]!3
+  [~ cp ~@0.65 [cp ~@0.239 cp ~@2.561] ~@0.35]
   >`)
   .bank("akailinn")
   .room(0.5)
-  .gain(0.3).lpf(1600)
+  .gain(0.3).lpf(1600),
+
+  s(`<
+  [bd bd bd bd]
+  >`)
+  .bank("rolandjd990")
+  .room(0.4).size(2)
+  .gain(0.9).lpf(300)
+)
+
+const voice = stack(
+  note("[c#6 ~ ~ ~ ~ ~ ~ ~]")
+  .sound("gm_fx_echoes")
+  .room(4).size(3).orbit(4)
+  .gain(0.6)
+  .delay(0.3).delaytime(0.4).delayfeedback(0.7)
 )
 
 stack(
@@ -62,12 +77,7 @@ stack(
 
   arrange(
     [8, silence],
-    [1,
-     note("[c#6 ~ ~ ~ ~ ~ ~ ~]")
-     .sound("gm_glockenspiel")
-     .room(5).size(1).orbit(4)
-     .delay(0.3).delaytime(0.25).delayfeedback(0.7)
-    ],
-    [9999, silence]
+    [1, voice],
+    [7, silence],
   )
 )
