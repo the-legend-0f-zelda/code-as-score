@@ -1,8 +1,7 @@
 setcps(1/2)
 
 const note1 = note(`<
-  [a2@15 e3@15 a2@16 a2@10 e3@10 a2@12]
-  [a2@15 e3@15 a2@16 a2@10 e3@10 a2@12]
+  [a2@15 e3@15 a2@16 a2@10 e3@10 a2@12]!2
   [f2@15 e3@15 f2@16 f2@10 e3@10 f2@12]
   [e2@15 d3@15 e2@16 e2@10 d3@10 e2@12]
   >`)
@@ -12,30 +11,35 @@ const note1 = note(`<
   .room(2.2).size(1.4).orbit(1)
 
 const note2 = note(`<
-  [~@15 g3@15 ~@30 g3@15 ~@15]
-  [~@15 g3@15 ~@30 g3@15 ~@15]
-  [~@15 a3@15 ~@30 a3@15 ~@15]
-  [~@15 a3@15 ~@30 a3@15 ~@15]
-  [~@15 c4@15 ~@30 c4@15 ~@15]
-  [~@15 c4@15 ~@30 c4@15 ~@15]
-  [~@15 a3@15 ~@30 a3@15 ~@15]
-  [~@15 a3@15 ~@30 a3@15 ~@15]
+  [~@15 g3@15 ~@30 g3@15 ~@15]!2
+  [~@15 a3@15 ~@30 a3@15 ~@15]!2
+  [~@15 c4@15 ~@30 c4@15 ~@15]!2
+  [~@15 a3@15 ~@30 a3@15 ~@15]!2
   >`)
   .add(note(9))
   .sound("z_sine")
   .gain(0.28)
-  .room(2).size(1.4)
+  .room(2).size(1.4).orbit(2)
 
 const note3 = note(`<
-  [a3@14 ~@2 c4@15 ~@12 a3@14 ~@2 c4@15 ~@12]
-  [a3@14 ~@2 c4@15 ~@12 a3@14 ~@2 c4@15 ~@12]
+  [a3@14 ~@2 c4@15 ~@12 a3@14 ~@2 c4@15 ~@12]!2
   [f3@14 ~@2 a3@15 ~@12 f3@14 ~@2 a3@15 ~@12]
   [e3@14 ~@2 a3@15 ~@12 e3@14 ~@2 a3@15 ~@12]
   >`)
   .add(note(9))
   .sound("z_sine")
   .gain(0.35)
-  .room(2).size(1.4).orbit(1)
+  .room(2).size(1.4).orbit(3)
+
+const beats = stack(
+  s(`<
+  [~ cp ~ cp]!7
+  [~ cp ~@0.15 cp@0.2 cp@0.25 ~@0.32 cp@1.08]
+  >`)
+  .bank("akailinn")
+  .room(0.5)
+  .gain(0.3).lpf(1600)
+)
 
 stack(
   note1,
@@ -52,11 +56,16 @@ stack(
   ),
 
   arrange(
+    [16, silence],
+    [9998, beats]
+  ),
+
+  arrange(
     [8, silence],
     [1,
      note("[c#6 ~ ~ ~ ~ ~ ~ ~]")
      .sound("gm_glockenspiel")
-     .room(5).size(1).orbit(2)
+     .room(5).size(1).orbit(4)
      .delay(0.3).delaytime(0.25).delayfeedback(0.7)
     ],
     [9999, silence]
