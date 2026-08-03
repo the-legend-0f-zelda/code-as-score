@@ -6,9 +6,9 @@ const note1 = note(`<
   [e2@15 d3@15 e2@16 e2@10 d3@10 e2@12]
   >`)
   .add(note(9))
-  .sound("z_sine")
+  .sound("zzfx")
   .gain(0.33)
-  .room(2).size(2).clip(0.5).orbit(1)
+  .room(2).size(3).orbit(1)
 
 const note2 = note(`<
   [~@15 g3@15 ~@30 g3@15 ~@15]!2
@@ -17,7 +17,7 @@ const note2 = note(`<
   [~@15 a3@15 ~@30 a3@15 ~@15]!2
   >`)
   .add(note(9))
-  .sound("z_sine")
+  .sound("zzfx")
   .gain(0.28)
   .room(3).size(1.8).orbit(2)
 
@@ -27,33 +27,33 @@ const note3 = note(`<
   [e3@15 ~@2 a3@15 ~@12 e3@15 ~@2 a3@15 ~@12]
   >`)
   .add(note(9))
-  .sound("z_sine")
+  .sound("zzfx")
   .gain("[.27@14 .35@2 .6@15 .55@12]!")
   .room(2).size(2).orbit(3)
 
 const bass1 = note(`<
-  [a1@14 a1@2 a1@15 a1@12 a1@14 a1@2 a1@15 a1@12]
+  [c2@14 ~@2 c2@27 c2@14 ~@2 c2@27]
   >`)
-  .add(note(-4))
   .sound("sine")
-  .gain(1.1)
-  .clip(0.7).orbit(6)
+  .clip(1)
+  .attack(.03)
+  .decay(.1)
+  .sustain(1)
+  .release(.25)
+  .gain(.75)
+  .orbit(6)
 
 const beat1 = stack(
   s(`<
   [~ cp ~ cp]!3
-  [~ cp ~@0.65 [cp ~@0.239 cp ~@2.561] ~@0.35]
+  <
+   [~ cp ~@0.5 sh@0.5 cp@0.5 ~@0.5]
+   [~ cp ~@0.5 [cp cp ~@0.05]@0.5 cp@0.5 ~@0.5]
+  >
   >`)
-  .bank("akailinn")
-  .room(0.5)
-  .gain(0.3).lpf(1600),
-
-  s(`<
-  [~]!3
-  [~ ~ ~@0.65 [cp ~@0.239 cp ~@2.561] ~@0.35]
-  >`)
-  .bank("sequentialcircuitsdrumtracks")
-  .gain(0.83).room(0.3).lpf(600),
+  .bank("bossdr550")
+  .room(0.4)
+  .gain(0.4).lpf(3200),
 
   s(`[bd bd bd bd]`)
   .bank("rolandjd990")
@@ -61,12 +61,10 @@ const beat1 = stack(
   .gain(0.9).lpf(300)
 )
 
-const beat2 = stack(
-  s(`[[~ sh] [~ sh] [~ sh] [~ sh]]`)
+const beat2 = s(`[[~ sh] [~ sh] [~ sh] [~ sh]]`)
   .bank("rolandtr727")
   .room(0.1).size(2)
-  .gain(1.2).lpf(1500),
-)
+  .gain(0.8).lpf(1500)
 
 const frag1 = note("[c#6 ~ ~ ~ ~ ~ ~ ~]")
   .sound("gm_pad_halo")
