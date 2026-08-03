@@ -6,9 +6,9 @@ const note1 = note(`<
   [e2@15 d3@15 e2@16 e2@10 d3@10 e2@12]
   >`)
   .add(note(9))
-  .sound("triangle")
-  .gain(0.3)
-  .room(2.2).size(1.7).orbit(1)
+  .sound("z_sine")
+  .gain(0.33)
+  .room(2).size(2).clip(0.5).orbit(1)
 
 const note2 = note(`<
   [~@15 g3@15 ~@30 g3@15 ~@15]!2
@@ -17,21 +17,29 @@ const note2 = note(`<
   [~@15 a3@15 ~@30 a3@15 ~@15]!2
   >`)
   .add(note(9))
-  .sound("triangle")
+  .sound("z_sine")
   .gain(0.28)
-  .room(3).size(2).orbit(2)
+  .room(3).size(1.8).orbit(2)
 
 const note3 = note(`<
-  [a3@14 ~@2 c4@15 ~@12 a3@14 ~@2 c4@15 ~@12]!2
-  [f3@14 ~@2 a3@15 ~@12 f3@14 ~@2 a3@15 ~@12]
-  [e3@14 ~@2 a3@15 ~@12 e3@14 ~@2 a3@15 ~@12]
+  [a3@15 ~@2 c4@15 ~@12 a3@15 ~@2 c4@15 ~@12]!2
+  [f3@15 ~@2 a3@15 ~@12 f3@15 ~@2 a3@15 ~@12]
+  [e3@15 ~@2 a3@15 ~@12 e3@15 ~@2 a3@15 ~@12]
   >`)
   .add(note(9))
-  .sound("triangle")
-  .gain(0.35)
+  .sound("z_sine")
+  .gain("[.27@14 .35@2 .6@15 .55@12]!")
   .room(2).size(2).orbit(3)
 
-const beats = stack(
+const bass1 = note(`<
+  [a1@14 a1@2 a1@15 a1@12 a1@14 a1@2 a1@15 a1@12]
+  >`)
+  .add(note(-4))
+  .sound("sine")
+  .gain(1.1)
+  .clip(0.7).orbit(6)
+
+const beat1 = stack(
   s(`<
   [~ cp ~ cp]!3
   [~ cp ~@0.65 [cp ~@0.239 cp ~@2.561] ~@0.35]
@@ -41,20 +49,56 @@ const beats = stack(
   .gain(0.3).lpf(1600),
 
   s(`<
-  [bd bd bd bd]
+  [~]!3
+  [~ ~ ~@0.65 [cp ~@0.239 cp ~@2.561] ~@0.35]
   >`)
+  .bank("sequentialcircuitsdrumtracks")
+  .gain(0.83).room(0.3).lpf(600),
+
+  s(`[bd bd bd bd]`)
   .bank("rolandjd990")
   .room(0.4).size(2)
   .gain(0.9).lpf(300)
 )
 
-const voice = stack(
-  note("[c#6 ~ ~ ~ ~ ~ ~ ~]")
+const beat2 = stack(
+  s(`[[~ sh] [~ sh] [~ sh] [~ sh]]`)
+  .bank("rolandtr727")
+  .room(0.1).size(2)
+  .gain(1.2).lpf(1500),
+)
+
+const frag1 = note("[c#6 ~ ~ ~ ~ ~ ~ ~]")
+  .sound("gm_pad_halo")
+  .room(4).size(3).orbit(4)
+  .gain(0.7)
+  .delay(0.5).delaytime(0.4).delayfeedback(0.7)
+
+const voice1 = note("[c#6 ~ ~ ~ ~ ~ ~ ~]")
   .sound("gm_fx_echoes")
   .room(4).size(3).orbit(4)
   .gain(0.6)
   .delay(0.3).delaytime(0.4).delayfeedback(0.7)
-)
+
+const voice2 = note("[~ ~ ~ b5 ~ ~ g#5 ~]")
+  .sound("gm_fx_echoes")
+  .room(4).size(3).orbit(4)
+  .gain(0.6)
+  .delay(0.3).delaytime(0.4).delayfeedback(0.7)
+
+const voice3 = note("[g#5 ~ ~ b5 ~ ~ ~ ~]")
+  .sound("gm_fx_echoes")
+  .room(4).size(3).orbit(4)
+  .gain(0.6)
+  .delay(0.3).delaytime(0.4).delayfeedback(0.7)
+
+const voice4 = note("[~ ~ ~ ~ ~ ~ g#5 ~@0.9]")
+  .add(note(0.2))
+  .sound("gm_fx_echoes")
+  .room(4).size(3).orbit(4)
+  .gain(0.6)
+  .delay(0.3).delaytime(0.4).delayfeedback(0.7)
+
 
 stack(
   note1,
@@ -72,12 +116,31 @@ stack(
 
   arrange(
     [16, silence],
-    [9998, beats]
+    [9998, stack(bass1, beat1)]
+  ),
+
+  arrange(
+    [24, silence],
+    [9999, beat2]
   ),
 
   arrange(
     [8, silence],
-    [1, voice],
+    [1, frag1],
+    [15, silence],
+
+    [1, frag1],
     [7, silence],
+
+    [1, voice1],
+    [7, silence],
+    [1, voice1],
+    [7, silence],
+
+    [1, voice1],
+    //[1, stack(voice1, voice2)],
+    //[1, voice1],
+    //[1, stack(voice3, voice4)],
+    //[1, voice1]
   )
 )
